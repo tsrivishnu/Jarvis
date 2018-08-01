@@ -1,6 +1,10 @@
 require 'sinatra'
 require 'pry'
 require 'sinatra/config_file'
+require "sinatra/reloader" if development?
+require_relative 'lib/dialogue_flow'
+
+
 # require_relative 'lib/google_geocode'
 
 set :bind, '0.0.0.0'
@@ -9,10 +13,11 @@ set :bind, '0.0.0.0'
 get "/" do
   content_type :json
   "Hi"
-  # if params[:address].nil?
-  #   halt 400, "Address is missing"
-  # end
-  # # If we are to ever change the provider, we can simply add a new class
-  # # for that provider and change the line below.
-  # GoogleGeocode.get_latlong(address: params[:address]).to_json
+end
+
+post "/" do
+  content_type :json
+  dialogue_flow_request = DialogueFlow::Request.new(request.body.read.to_s)
+  resp = dialogue_flow_request.intent_handler.handle
+  resp.to_json
 end
