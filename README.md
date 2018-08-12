@@ -1,7 +1,10 @@
 # Jarvis
 
 Simple ruby application to server requests from API.ai (Dialogue Flow) for the
-Jarvis agent that helps me automate/control stuff at home.
+Jarvis agent that helps me automate/control the followingstuff at home.
+
+* DigitalOcean
+  * VPN server
 
 ## Setup
 
@@ -30,9 +33,9 @@ Run the following to install the required gems:
    ```
 #### Set configuration
 
-Use the sample configuration file to set the required configuration variables in `config.yml`.
+Use the sample configuration file to set the required configuration variables in `config/application.yml`.
  ```bash
- cp config.yml.example config.yml
+ cp config/application.yml.example config/application.yml
  # Edit +config.yml+ to set the correct values to the variables
  ```
 
