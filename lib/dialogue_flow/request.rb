@@ -2,11 +2,16 @@ module DialogueFlow
   class Request
     def initialize(request_body)
       @req_hash = JSON.parse(request_body)
+      puts @req_hash
     end
 
     def intent_handler
-      # handler_class = "DialogueFlow::IntentHandlers::#{intent_name}".constantize
-      handler_class = DialogueFlow::IntentHandlers::StartVPNServer
+      handler_class = case intent_name
+      when "StartVPNServer"
+        DialogueFlow::IntentHandlers::StartVPNServer
+      when "StopVPNServer"
+        DialogueFlow::IntentHandlers::StopVPNServer
+      end
       handler_class.new(self)
     end
 

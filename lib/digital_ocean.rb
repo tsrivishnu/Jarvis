@@ -1,6 +1,10 @@
 require_relative 'digital_ocean/droplet'
 require_relative 'digital_ocean/configuration'
 
+# require all droplets
+Dir[File.join(__dir__, 'digital_ocean/droplets', '**/*.rb')].each { |file|
+  require file
+}
 module DigitalOcean
   class << self
     attr_writer :configuration

@@ -1,7 +1,6 @@
 require_relative "config/application.rb"
 # require "sinatra/reloader" if development?
 
-binding.pry
 class JarvisBackend < Sinatra::Base
   register Sinatra::ConfigFile
 

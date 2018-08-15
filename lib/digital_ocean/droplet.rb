@@ -1,13 +1,25 @@
 module DigitalOcean
   class Droplet
-    def initialize(size: "s-1vcpu-1gb", region: "blr1",
-                   image_name: "openvpn",
-                   ssh_key_name: "MacBook Pro - Munna")
+    class << self
+      def all(tag: )
+        DigitalOcean.configuration.client
+          .droplets.all(tag_name: tag).map { |d|
+
+          new(id: d.id)
+        }
+      end
+    end
+
+    attr_reader :id, :size, :region, :name, :tags
+
+    def initialize(size: nil, region: nil, image_name: nil,
+                   ssh_key_name: nil, id: nil)
       @size = size
       @region = region
       @image_name = image_name
       @ssh_key_name = ssh_key_name
       @name = "#{@image_name}-#{Time.now.strftime("%F.%H%M")}"
+      @id = id
       @client = DigitalOcean.configuration.client
     end
 
@@ -18,14 +30,17 @@ module DigitalOcean
           :size => @size,
           :region => @region,
           :image => image_id,
-          :ssh_keys => ssh_keys
+          :ssh_keys => ssh_keys,
+          :tags => tags
         )
       )
+      @id = @droplet.id if @droplet
       @droplet
     end
 
-    def status
-
+    def destroy
+      raise "No Droplet ID" if id.blank?
+      @client.droplets.delete(id: @id)
     end
 
     private
@@ -43,6 +58,10 @@ module DigitalOcean
                        }.first.id
                        [key_id]
                      end
+    end
+
+    def tags
+      [@image_name, @region, :by_jarvis]
     end
   end
 end

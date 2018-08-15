@@ -4,6 +4,7 @@ Bundler.require(:default) # This will require all the gems
 require "yaml"
 
 require_relative '../lib/dialogue_flow'
+require_relative '../lib/digital_ocean'
 
 class AppConfig
   def self.load!
