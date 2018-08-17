@@ -2,51 +2,44 @@ module DialogueFlow
   module IntentHandlers
     class StopVPNServer < Base
       def handle
-        return {
-          "fulfillmentMessages": [
-            {
-              "text": {
-                "text": [
-                  "Delete initiated."
-                ]
-              }
-            }
-          ],
-          "payload": {
-            "google": {
-              "expectUserResponse": true,
-              "richResponse": {
-                "items": [
-                  {
-                    "simpleResponse": {
-                      "textToSpeech": "this is a simple response"
+        if running_vpn_servers.count > 0
+          # Delete all VPN servers
+          running_vpn_servers.each do |droplet|
+            droplet.destroy
+          end
+          {
+            "payload": {
+              "google": {
+                "expectUserResponse": false,
+                "richResponse": {
+                  "items": [
+                    {
+                      "simpleResponse": {
+                        "textToSpeech": "All VPN servers are deleted"
+                      }
                     }
-                  }
-                ]
+                  ]
+                }
               }
             }
           }
-        }
-
-        if running_vpn_servers.count > 0
-          if running_vpn_servers.count == 1
-            # Delete it
-            {
-              "fulfillmentMessages": [
-                {
-                  "text": {
-                    "text": [
-                      "Delete initiated."
-                    ]
-                  }
-                }
-              ]
-            }
-          else
-            # Ask for which one.
-          end
         else
-          # No running vpn servers
+          {
+            "payload": {
+              "google": {
+                "expectUserResponse": false,
+                "richResponse": {
+                  "items": [
+                    {
+                      "simpleResponse": {
+                        "textToSpeech": "Ummm! No VPN servers are running."
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
         end
       end
 
