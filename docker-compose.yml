@@ -1,0 +1,26 @@
+version: '3'
+services:
+  ngrok:
+    image: "wernight/ngrok"
+    networks:
+      - dev
+    command: "ngrok http app:4567"
+    tty: true
+  app:
+    image: ruby:alpine
+    networks:
+      - dev
+    environment:
+      BUNDLE_PATH: "/app/.bundle"
+    expose:
+      - 4567
+    ports:
+      - 4567:4567
+    tty: true
+    volumes:
+      - ".:/app"
+    working_dir: "/app"
+    command: 'bundle exec ruby app.rb'
+
+networks:
+  dev:
