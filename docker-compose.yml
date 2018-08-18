@@ -1,13 +1,11 @@
 version: '3'
 services:
-  ngrok:
-    image: "wernight/ngrok"
-    networks:
-      - dev
-    command: "ngrok http app:4567"
-    tty: true
+  nginx: 
+    image: nginx:alpine
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
   app:
-    image: ruby:alpine
+    image: ruby:latest
     networks:
       - dev
     environment:
@@ -15,7 +13,7 @@ services:
     expose:
       - 4567
     ports:
-      - 4567:4567
+      - 9001:4567
     tty: true
     volumes:
       - ".:/app"
