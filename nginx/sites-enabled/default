@@ -10,8 +10,8 @@ server {
     listen 443;
 
     ssl on;
-    ssl_certificate     /nginx/ssl/app.crt;
-    ssl_certificate_key /nginx/ssl/app.key;
+    ssl_certificate     /nginx/ssl/app.pem;
+    ssl_certificate_key /nginx/ssl/app.privkey.pem;
     ssl_session_cache   shared:SSL:10m;
 
     include /nginx/https-locations-enabled/*.conf;
