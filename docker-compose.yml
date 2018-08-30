@@ -5,24 +5,20 @@ services:
     networks:
       - dev
     expose:
-      - 80
       - 443
     ports:
-      - 80:80
-      - 443:443
+      - 9443:443
     volumes:
       - "./nginx:/nginx"
       - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
   app:
-    image: ruby:latest
+    image: tsrivishnu/for-rpi_alpine3.7_ruby:2.5.1
     networks:
       - dev
     environment:
       BUNDLE_PATH: "/app/.bundle"
     expose:
       - 4567
-    ports:
-      - 9001:4567
     tty: true
     volumes:
       - ".:/app"

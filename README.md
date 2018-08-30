@@ -48,15 +48,14 @@ Once the above setup it done, you can run the app with
 docker-compose up
 ```
 
-This will start the web server inside the docker container and expose it on port `4567`
-of your machine.
+This will start the web server inside the docker containers and expose it on
+port `9443` of your machine. Test it with
 
-> Note: If you are not using `crane` and `docker`, simple run `bundle exec ruby app.rb` to start
-the server. However, the server will start listeing for requests on port `4567`. Update the urls
-below accordingly.
+```bash
+curl https://localhost:9443
+```
 
 ## General guidelines
 
 * **Configuration values**: These can be changed as needed in the `config/application.yml` file.
-
 
