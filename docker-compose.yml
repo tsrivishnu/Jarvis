@@ -2,6 +2,7 @@ version: '3'
 services:
   app:
     image: tsrivishnu/for-rpi_alpine3.7_ruby:2.5.1
+    restart: always
     networks:
       - dev
     environment:
